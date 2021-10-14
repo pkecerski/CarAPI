@@ -16,6 +16,10 @@ Clone the repository...
 
     git clone https://github.com/pkecerski/CarAPI.git
 
+Enter the project folder
+
+    cd CarAPI
+
 Set up a virtual environment in your desired directory and start it...
 
     python3 -m venv venv
