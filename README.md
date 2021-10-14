@@ -31,12 +31,12 @@ Install modules using `pip`...
 
 Create a new database...
 
-    sqlite3 db.db
+    SQLite3 db.db
 
 Make your migrations...
     
     python manage.py makemigrations
-    python manage.py migrate
+    python manage.py migrate --run-syncdb
 
 Create a new superuser...
 
