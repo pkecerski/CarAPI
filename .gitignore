@@ -138,9 +138,7 @@ dmypy.json
 cython_debug/
 
 # MacOS trash
-/.DS_Store
-project/.DS_Store
-*.DS_Store
+.DS_Store
 
 # Migrations
 carapi/migrations
