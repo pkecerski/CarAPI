@@ -145,5 +145,5 @@ carapi/migrations
 
 # Docker
 # Dockerfile
-dockercompose.yml
+docker-compose.yml
 .dockerignore
