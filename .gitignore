@@ -146,6 +146,7 @@ carapi/migrations
 # Docker
 # Dockerfile
 .dockerignore
+data/
 
 # VS Code
 .vscode/
