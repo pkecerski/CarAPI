@@ -38,7 +38,9 @@ class CarViewSet(
         based on the request. Defaults to CarSerializer (all fields)
         """
         if hasattr(self, "action_serializers"):
-            return self.action_serializers.get(self.action, self.serializer_class)
+            return self.action_serializers.get(
+                self.action, self.serializer_class
+            )
 
         return super(CarViewSet, self).get_serializer_class()
 

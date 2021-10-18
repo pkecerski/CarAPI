@@ -3,7 +3,7 @@ FROM python:3.10-alpine
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV DEBUG 1
 
 # Working directory
