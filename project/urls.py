@@ -16,10 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import ping
-
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('ping/', ping, name="ping"),
-    path('api/', include('carapi.urls')),
+    path("admin/", admin.site.urls),
+    path("api/", include("carapi.urls")),
 ]

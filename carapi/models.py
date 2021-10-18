@@ -17,23 +17,24 @@ class Car(models.Model):
         avg_rating (float): Average rating for the car, defaults to NULL
                             when no ratings have been posted for given car.
                             Not required when creating an instance.
-        rates_number (int): Number of ratings for a given car, defaults to 0 
+        rates_number (int): Number of ratings for a given car, defaults to 0
                             when no ratings have been posted for given car.
                             Not required when creating an instance.
     """
+
     make = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     avg_rating = models.FloatField(blank=True, null=True)
     rates_number = models.IntegerField(blank=True, null=True, default=0)
 
     class Meta:
-        unique_together = ('make', 'model')
+        unique_together = ("make", "model")
 
     def __str__(self) -> str:
         """
         Represent car object as "Make Model"
         """
-        return (self.make + " " + self.model)
+        return self.make + " " + self.model
 
     @classmethod
     def checkNHTSAApi(cls, make, model) -> bool:
@@ -47,12 +48,15 @@ class Car(models.Model):
             model (str):       The model of the car, as per request
 
         """
-        url = ("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"
-               + make + "?format=json")
+        url = (
+            "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"
+            + make
+            + "?format=json"
+        )
         # Make request to external API, 5s timeout
         r = requests.get(url, timeout=5)
         if r.status_code == 200:
-            results = r.json()['Results']
+            results = r.json()["Results"]
             # Check for model name in the manufacturer's list of models
             for item in results:
                 if model.lower() == item["Model_Name"].lower():
@@ -86,8 +90,8 @@ class Car(models.Model):
         # Important - this has to happen after average rating calculation!
         self.rates_number = votes + 1
         # Save the changes to the object
-        self.save(update_fields=['avg_rating', 'rates_number'])
-        #return None
+        self.save(update_fields=["avg_rating", "rates_number"])
+        # return None
 
 
 class Rating(models.Model):
@@ -99,9 +103,11 @@ class Rating(models.Model):
         car_id (int):       Foreign key associated with the ID of a vehicle
                             in the Car class.
                             If the car is deleted, delete all the ratings.
-        rating (int):       Value between 1 to 5 to be added as a rating for 
+        rating (int):       Value between 1 to 5 to be added as a rating for
                             the given car. Used to calculate average rating.
     """
+
     car_id = models.ForeignKey(Car, on_delete=CASCADE)
-    rating = models.IntegerField(validators=[MinValueValidator(1),
-                                           MaxValueValidator(5)])
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )

@@ -6,10 +6,12 @@ from .models import *
 
 
 # Create your views here
-class CarViewSet(mixins.CreateModelMixin,
-                 mixins.DestroyModelMixin,
-                 mixins.ListModelMixin,
-                 viewsets.GenericViewSet):
+class CarViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
     """
     API endpoint that shows all the cars in the database.
     Allows listing: GET /cars/
@@ -21,12 +23,13 @@ class CarViewSet(mixins.CreateModelMixin,
         serializer_class:  Provides a default serializer for the class
         action_serializer: Picks the correct  serializer based on request
     """
+
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     action_serializers = {
-        'list': CarSerializerGet,
-        'create': CarSerializerPost,
-        'destroy': CarSerializerDelete,
+        "list": CarSerializerGet,
+        "create": CarSerializerPost,
+        "destroy": CarSerializerDelete,
     }
 
     def get_serializer_class(self):
@@ -34,9 +37,8 @@ class CarViewSet(mixins.CreateModelMixin,
         Override the class method to allow us to pick the correct serializer
         based on the request. Defaults to CarSerializer (all fields)
         """
-        if hasattr(self, 'action_serializers'):
-            return self.action_serializers.get(self.action,
-                                               self.serializer_class)
+        if hasattr(self, "action_serializers"):
+            return self.action_serializers.get(self.action, self.serializer_class)
 
         return super(CarViewSet, self).get_serializer_class()
 
@@ -49,26 +51,36 @@ class CarViewSet(mixins.CreateModelMixin,
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Check external API for existence of the car
-            if Car.checkNHTSAApi(request.data['make'],
-                                 request.data['model']):
+            if Car.checkNHTSAApi(request.data["make"], request.data["model"]):
                 # Save the car info
                 serializer.save()
-                return Response({"status": "success",
-                                 "data": serializer.data},
-                                status=status.HTTP_201_CREATED)
+                return Response(
+                    {"status": "success", "data": serializer.data},
+                    status=status.HTTP_201_CREATED,
+                )
             else:
-                return Response({"status": "error",
-                                 "data": (request.data['make'] + " " 
-                                 + request.data['model'] + " doesn't exist")},
-                                status=status.HTTP_406_NOT_ACCEPTABLE)
+                return Response(
+                    {
+                        "status": "error",
+                        "data": (
+                            request.data["make"]
+                            + " "
+                            + request.data["model"]
+                            + " doesn't exist"
+                        ),
+                    },
+                    status=status.HTTP_406_NOT_ACCEPTABLE,
+                )
         else:
-            return Response({"status": "error",
-                             "data": serializer.errors},
-                            status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"status": "error", "data": serializer.errors},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
-class RateViewSet(mixins.CreateModelMixin,
-                  mixins.ListModelMixin,
-                  viewsets.GenericViewSet):
+
+class RateViewSet(
+    mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet
+):
     """
     API endpoint that shows Ratings for given Cars in the database
     Allows listing: GET /rate/ - not needed per specification, but nice to have
@@ -79,6 +91,7 @@ class RateViewSet(mixins.CreateModelMixin,
         queryset:          Looks through all the Rating objects in the DB
         serializer_class:  Provides a default serializer for the class
     """
+
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
@@ -90,20 +103,22 @@ class RateViewSet(mixins.CreateModelMixin,
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Send update request to parent Car object
-            parent_car = Car.objects.get(id=request.data['car_id'])
-            parent_car.rate(request.data['rating'])
+            parent_car = Car.objects.get(id=request.data["car_id"])
+            parent_car.rate(request.data["rating"])
             # Save the rating info
             serializer.save()
-            return Response({"status": "success",
-                             "data": serializer.data},
-                            status=status.HTTP_201_CREATED)
+            return Response(
+                {"status": "success", "data": serializer.data},
+                status=status.HTTP_201_CREATED,
+            )
         else:
-            return Response({"status": "error",
-                             "data": serializer.errors},
-                            status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"status": "error", "data": serializer.errors},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
-class PopularViewSet(mixins.ListModelMixin,
-                     viewsets.GenericViewSet):
+
+class PopularViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that shows the most popular cars
     Allows listing: GET /popular
@@ -113,5 +128,6 @@ class PopularViewSet(mixins.ListModelMixin,
                            Descending sort by number of ratings
         serializer_class:  Provides a default serializer for the class
     """
-    queryset = Car.objects.all().order_by('-rates_number')
+
+    queryset = Car.objects.all().order_by("-rates_number")
     serializer_class = PopularSerializer
