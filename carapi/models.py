@@ -37,7 +37,7 @@ class Car(models.Model):
         return self.make + " " + self.model
 
     @classmethod
-    def checkNHTSAApi(cls, make, model) -> bool:
+    def check_nhtsa_api(cls, make, model) -> bool:
         """
         Contacts the external NHTSA Vehicle API, to verify whether
         the provided make & model combination is valid.

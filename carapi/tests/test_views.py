@@ -2,8 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 
-from ..views import *
-from ..models import *
+from ..models import Car
 
 
 # Create your tests here.

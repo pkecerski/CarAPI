@@ -1,8 +1,14 @@
-from django.shortcuts import render
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
-from .serializers import *
-from .models import *
+from .serializers import (
+    CarSerializer,
+    CarSerializerGet,
+    CarSerializerPost,
+    CarSerializerDelete,
+    RatingSerializer,
+    PopularSerializer,
+)
+from .models import Car, Rating
 
 
 # Create your views here
@@ -53,7 +59,9 @@ class CarViewSet(
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Check external API for existence of the car
-            if Car.checkNHTSAApi(request.data["make"], request.data["model"]):
+            if Car.check_nhtsa_api(
+                request.data["make"], request.data["model"]
+            ):
                 # Save the car info
                 serializer.save()
                 return Response(
