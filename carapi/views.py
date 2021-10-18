@@ -32,7 +32,7 @@ class CarViewSet(
 
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    action_serializers = {
+    action_serializers: dict = {
         "list": CarSerializerGet,
         "create": CarSerializerPost,
         "destroy": CarSerializerDelete,

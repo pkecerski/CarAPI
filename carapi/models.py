@@ -37,7 +37,7 @@ class Car(models.Model):
         return self.make + " " + self.model
 
     @classmethod
-    def check_nhtsa_api(cls, make, model) -> bool:
+    def check_nhtsa_api(cls, make: str, model: str) -> bool:
         """
         Contacts the external NHTSA Vehicle API, to verify whether
         the provided make & model combination is valid.
@@ -48,13 +48,13 @@ class Car(models.Model):
             model (str):       The model of the car, as per request
 
         """
-        url = (
+        url: str = (
             "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"
             + make
             + "?format=json"
         )
         # Make request to external API, 5s timeout
-        r = requests.get(url, timeout=5)
+        r: requests.Response = requests.get(url, timeout=5)
         if r.status_code == 200:
             results = r.json()["Results"]
             # Check for model name in the manufacturer's list of models
