@@ -24,3 +24,13 @@ RUN set -ex \
 
 # Copy project to container
 COPY . .
+
+# collect static files
+RUN python manage.py collectstatic --noinput
+
+# Add and run as non-root user
+RUN adduser -D myuser
+USER myuser
+
+# Run gunicorn
+CMD gunicorn project.wsgi:application --bind 0.0.0.0:$PORT
