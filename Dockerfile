@@ -4,7 +4,7 @@ FROM python:3.10-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-# ENV DEBUG 1
+ENV DEBUG 1
 
 # Install psql
 RUN apt-get update -qq \
