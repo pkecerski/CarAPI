@@ -1,10 +1,10 @@
-# Configure OS
+# Configure base OS
 FROM python:3.10-alpine
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV DEBUG 1
+# ENV DEBUG 1
 
 # Working directory
 WORKDIR /drf_carapi
@@ -24,13 +24,3 @@ RUN set -ex \
 
 # Copy project to container
 COPY . .
-
-# collect static files
-RUN python manage.py collectstatic --noinput
-
-# Add and run as non-root user
-RUN adduser -D myuser
-USER myuser
-
-# Run gunicorn
-CMD gunicorn project.wsgi:application --bind 0.0.0.0:$PORT
