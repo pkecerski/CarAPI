@@ -145,5 +145,7 @@ carapi/migrations
 
 # Docker
 # Dockerfile
-docker-compose.yml
 .dockerignore
+
+# VS Code
+.vscode/
