@@ -2,6 +2,8 @@
 
 This is a simple REST Api created for Netguru's application process.
 
+The API is available at https://djangorest-carapi.herokuapp.com/popular/
+
 ----
 
 # Requirements
