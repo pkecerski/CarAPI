@@ -29,14 +29,11 @@ Install modules using `pip`...
 
     pip install -r requirements.txt
 
-Create a new database...
-
-    SQLite3 db.db
-
 Make your migrations...
     
     python manage.py makemigrations
     python manage.py migrate --run-syncdb
+    python manage.py collectstatic
 
 Create a new superuser...
 
