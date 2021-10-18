@@ -151,4 +151,4 @@ carapi/migrations
 .vscode/
 
 # Debug files
-.old
+*.old
