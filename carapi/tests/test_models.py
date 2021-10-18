@@ -92,8 +92,8 @@ class CarTest(TestCase):
         """
         Test external API check
         """
-        self.assertTrue(Car.checkNHTSAApi("Toyota", "Supra"))
-        self.assertFalse(Car.checkNHTSAApi("Fake", "Car"))
+        self.assertTrue(Car.check_nhtsa_api("Toyota", "Supra"))
+        self.assertFalse(Car.check_nhtsa_api("Fake", "Car"))
 
 
 class RatingTest(TestCase):
