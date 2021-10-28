@@ -1,6 +1,6 @@
 # Car API - Python, Django, REST
 
-This is a simple REST Api created for Netguru's application process.
+This is a simple REST Api for creating and rating cars!
 
 The API is available at https://djangorest-carapi.herokuapp.com/
 
